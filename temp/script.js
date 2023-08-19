@@ -1,8 +1,35 @@
-const para = document.querySelector("p");
+function generatePrimes(quota) {
+  function isPrime(n) {
+    for (let c = 2; c <= Math.sqrt(n); ++c) {
+      if (n % c === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-para.addEventListener("click", updateName);
+  const primes = [];
+  const maximum = 1000000;
 
-function updateName() {
-  const name = prompt("Enter a new name");
-  para.textContent = `Player 1: ${name}`;
+  while (primes.length < quota) {
+    const candidate = Math.floor(Math.random() * (maximum + 1));
+    if (isPrime(candidate)) {
+      primes.push(candidate);
+    }
+  }
+
+  return primes;
 }
+
+document.querySelector("#generate").addEventListener("click", () => {
+  const quota = document.querySelector("#quota").value;
+  const primes = generatePrimes(quota);
+  document.querySelector(
+    "#output",
+  ).textContent = `Finished generating ${quota} primes!`;
+});
+
+document.querySelector("#reload").addEventListener("click", () => {
+  document.location.reload();
+});
+
